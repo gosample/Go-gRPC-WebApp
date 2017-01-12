@@ -1,0 +1,15 @@
+syntax "proto3"
+package services;
+
+import "google/api/annotations.proto";
+import "stars-app/messages"
+
+
+service ListStarsService {
+  rpc ListStars(User) returns (User) {
+    option (google.api.http) = {
+      post: "/v1/list"
+      body: "*"
+    };
+  }
+}
