@@ -1,12 +1,12 @@
-syntax "proto3"
+syntax = "proto3";
 package services;
 
 import "google/api/annotations.proto";
-import "stars-app/messages"
+import "stars-app/messages/user/user.proto";
 
 
 service LoginService {
-  rpc Login(User) returns (User) {
+  rpc Login(user.User) returns (user.User) {
     option (google.api.http) = {
       post: "/v1/login"
       body: "*"

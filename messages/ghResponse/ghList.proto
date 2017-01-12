@@ -1,5 +1,5 @@
-//Github response structure
-package messages;
+syntax = "proto3";
+package ghResponse;
 
 message List{
 
@@ -8,6 +8,6 @@ message List{
     string stargazers_count =2;
   }
 
-  string token =1;
-  repeated ghList =2;
+  string user =1;
+  repeated ghList list =2;
 }

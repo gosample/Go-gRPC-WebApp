@@ -1,12 +1,12 @@
-syntax "proto3"
+syntax = "proto3";
 package services;
 
 import "google/api/annotations.proto";
-import "stars-app/messages"
+import "stars-app/messages/ghResponse/ghList.proto";
 
 
 service ListStarsService {
-  rpc ListStars(User) returns (User) {
+  rpc ListStars(ghResponse.List) returns (ghResponse.List) {
     option (google.api.http) = {
       post: "/v1/list"
       body: "*"
