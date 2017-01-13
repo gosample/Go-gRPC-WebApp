@@ -103,7 +103,7 @@ func RegisterLoginServiceHandler(ctx context.Context, mux *runtime.ServeMux, con
 }
 
 var (
-	pattern_LoginService_Login_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "login"}, ""))
+	pattern_LoginService_Login_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"api", "login"}, ""))
 )
 
 var (

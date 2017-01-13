@@ -4,56 +4,43 @@ import (
 	"fmt"
 	"net/http"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
-	"golang.org/x/net/context"
+  "golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
-  "stars-app/utils"
-  user "stars-app/messages/user"
-  ghResponse "stars-app/messages/ghResponse"
+  "stars-app/variables"
   pbLogin "stars-app/services/login"
 	pbList "stars-app/services/list"
 )
 
-type Services struct{}
-
-func (m *Services) Login(c context.Context, s *user.User) (*user.User, error) {
-	fmt.Printf("rpc request Echo(%q)\n", s.Username)
-	return s, nil
-}
-
-func (m *Services) ListStars(c context.Context, s *ghResponse.List) (*ghResponse.List, error) {
-	fmt.Printf("rpc request Echo\n")
-	return s, nil
-}
-
-var (
-  GrpcServer *grpc.Server
-  Mux *http.ServeMux
-)
 
 func Init(){
-  Mux = http.NewServeMux()
+  variables.Mux = http.NewServeMux()
   opts := []grpc.ServerOption{
-    grpc.Creds(credentials.NewClientTLSFromCert(utils.StarsAppCertPool, utils.Addr)),
+    grpc.Creds(credentials.NewClientTLSFromCert(variables.StarsAppCertPool, variables.Addr)),
   }
-  GrpcServer = grpc.NewServer(opts...)
-  pbLogin.RegisterLoginServiceServer(GrpcServer, new(Services))
-  pbList.RegisterListStarsServiceServer(GrpcServer, new(Services))
+  variables.GrpcServer = grpc.NewServer(opts...)
+
+  pbLogin.RegisterLoginServiceServer(variables.GrpcServer, new(pbLogin.AuthServices))
+  pbList.RegisterListStarsServiceServer(variables.GrpcServer, new(pbList.GitHubServices))
 
   ctx := context.Background()
-  dopts := []grpc.DialOption{grpc.WithTransportCredentials(utils.Creds)}
+  dopts := []grpc.DialOption{grpc.WithTransportCredentials(variables.Creds)}
   gwmux := runtime.NewServeMux()
 
-  err1 := pbLogin.RegisterLoginServiceHandlerFromEndpoint(ctx, gwmux, utils.Addr, dopts)
+  err1 := pbLogin.RegisterLoginServiceHandlerFromEndpoint(ctx, gwmux, variables.Addr, dopts)
   if err1 != nil {
     fmt.Printf("serve: %v\n", err1)
     return
   }
-  err1 = pbList.RegisterListStarsServiceHandlerFromEndpoint(ctx, gwmux, utils.Addr, dopts)
+  err1 = pbList.RegisterListStarsServiceHandlerFromEndpoint(ctx, gwmux, variables.Addr, dopts)
   if err1 != nil {
     fmt.Printf("serve: %v\n", err1)
     return
   }
 
-  Mux.Handle("/", gwmux)
+  variables.Mux.Handle("/api/", gwmux)
+  variables.Mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./public"))))
+  variables.Mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+    http.ServeFile(w, r, "./public/index.html")
+  })
 }

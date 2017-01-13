@@ -8,7 +8,7 @@ import "stars-app/messages/user/user.proto";
 service LoginService {
   rpc Login(user.User) returns (user.User) {
     option (google.api.http) = {
-      post: "/v1/login"
+      post: "/api/login"
       body: "*"
     };
   }

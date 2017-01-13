@@ -5,16 +5,7 @@ import (
 	"fmt"
   "io/ioutil"
   "google.golang.org/grpc/credentials"
-)
-
-var (
-	StarsAppKeyPair  *tls.Certificate
-	StarsAppCertPool *x509.CertPool
-  Creds credentials.TransportCredentials
-)
-
-var(
-  Addr string = "localhost:8587"
+  "stars-app/variables"
 )
 
 
@@ -34,14 +25,14 @@ func Init() {
 	if err != nil {
 		panic(err)
 	}
-	StarsAppKeyPair = &pair
-	StarsAppCertPool = x509.NewCertPool()
-	ok := StarsAppCertPool.AppendCertsFromPEM(certBytes)
+	variables.StarsAppKeyPair = &pair
+	variables.StarsAppCertPool = x509.NewCertPool()
+	ok := variables.StarsAppCertPool.AppendCertsFromPEM(certBytes)
 	if !ok {
 		panic("bad certs")
 	}
-  Creds = credentials.NewTLS(&tls.Config{
-    ServerName: Addr,
-    RootCAs:    StarsAppCertPool,
+  variables.Creds = credentials.NewTLS(&tls.Config{
+    ServerName: variables.Addr,
+    RootCAs:    variables.StarsAppCertPool,
   })
 }
