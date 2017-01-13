@@ -1,18 +1,57 @@
 package main
 
 import (
-	"encoding/base64"
-	"encoding/json"
+	//"encoding/base64"
+	//"encoding/json"
 	"fmt"
-	"io/ioutil"
+	//"io/ioutil"
+	"crypto/tls"
+	"google.golang.org/grpc"
+	"net"
 	"log"
 	"net/http"
 	"strings"
+	"stars-app/utils"
+	"stars-app/services"
 )
 
 const GITHUB_API_KEY = ""
 const GITHUB_USERNAME = ""
 
+func grpcHandlerFunc(grpcServer *grpc.Server, otherHandler http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// TODO(tamird): point to merged gRPC code rather than a PR.
+		// This is a partial recreation of gRPC's internal checks https://github.com/grpc/grpc-go/pull/514/files#diff-95e9a25b738459a2d3030e1e6fa2a718R61
+		if r.ProtoMajor == 2 && strings.Contains(r.Header.Get("Content-Type"), "application/grpc") {
+			grpcServer.ServeHTTP(w, r)
+		} else {
+			otherHandler.ServeHTTP(w, r)
+		}
+	})
+}
+
+func main(){
+	utils.Init();
+	services.Init();
+	conn, err1 := net.Listen("tcp", fmt.Sprintf(":%d", 8587))
+if err1 != nil {
+	panic(err1)
+}
+srv := &http.Server{
+	Addr:    utils.Addr,
+	Handler: grpcHandlerFunc(services.GrpcServer, services.Mux),
+	TLSConfig: &tls.Config{
+		Certificates: []tls.Certificate{*utils.StarsAppKeyPair},
+		NextProtos:   []string{"h2"},
+	},
+}
+fmt.Printf("grpc on port: %d\n", 8587)
+err1 = srv.Serve(tls.NewListener(conn, srv.TLSConfig))
+if err1 != nil {
+	log.Fatal("ListenAndServe: ", err1)
+}
+}
+/*
 func main() {
 	mux := http.NewServeMux()
 
@@ -134,4 +173,4 @@ type User struct {
 type Item struct {
 	Repo  string `json:"name"`
 	Stars int    `json:"stargazers_count"`
-}
+}*/

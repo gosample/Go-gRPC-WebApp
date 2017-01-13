@@ -1,36 +1,47 @@
+package utils;
 import (
 	"crypto/tls"
 	"crypto/x509"
 	"fmt"
   "io/ioutil"
+  "google.golang.org/grpc/credentials"
 )
 
 var (
-	starsAppKeyPair  *tls.Certificate
-	starsAppCertPool *x509.CertPool
+	StarsAppKeyPair  *tls.Certificate
+	StarsAppCertPool *x509.CertPool
+  Creds credentials.TransportCredentials
 )
 
-func init() {
+var(
+  Addr string = "localhost:8587"
+)
 
-  keyBytes, err := ioutil.ReadFile("stars-app/utils/certs/key.pem")
+
+func Init() {
+
+  keyBytes, err := ioutil.ReadFile("utils/certs/server.key")
   if err != nil {
     fmt.Print(err)
   }
 
-  certBytes, err := ioutil.ReadFile("stars-app/utils/certs/cert.pem")
+  certBytes, err := ioutil.ReadFile("utils/certs/server.pem")
   if err != nil {
     fmt.Print(err)
   }
 
-	var err error
 	pair, err := tls.X509KeyPair(certBytes, keyBytes)
 	if err != nil {
 		panic(err)
 	}
-	starsAppKeyPair = &pair
-	starsAppCertPool = x509.NewCertPool()
-	ok := starsAppCertPool.AppendCertsFromPEM(certBytes)
+	StarsAppKeyPair = &pair
+	StarsAppCertPool = x509.NewCertPool()
+	ok := StarsAppCertPool.AppendCertsFromPEM(certBytes)
 	if !ok {
 		panic("bad certs")
 	}
+  Creds = credentials.NewTLS(&tls.Config{
+    ServerName: Addr,
+    RootCAs:    StarsAppCertPool,
+  })
 }

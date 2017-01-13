@@ -15,7 +15,7 @@ package services
 import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
-import _ "google/api"
+//import _ "google/api"
 import ghResponse "stars-app/messages/ghResponse"
 
 import (
