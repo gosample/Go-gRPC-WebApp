@@ -8,7 +8,7 @@ import "stars-app/messages/ghResponse/ghList.proto";
 service ListStarsService {
   rpc ListStars(ghResponse.List) returns (ghResponse.List) {
     option (google.api.http) = {
-      post: "/api/list"
+      put: "/api/list"
       body: "*"
     };
   }

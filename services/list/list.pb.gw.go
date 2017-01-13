@@ -71,7 +71,7 @@ func RegisterListStarsServiceHandlerFromEndpoint(ctx context.Context, mux *runti
 func RegisterListStarsServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
 	client := NewListStarsServiceClient(conn)
 
-	mux.Handle("POST", pattern_ListStarsService_ListStars_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PUT", pattern_ListStarsService_ListStars_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(ctx)
 		defer cancel()
 		if cn, ok := w.(http.CloseNotifier); ok {

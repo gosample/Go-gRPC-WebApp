@@ -7,7 +7,7 @@ message List{
     string name =1;
     string stargazers_count =2;
   }
-
-  string user =1;
-  repeated ghList list =2;
+  string token=1;
+  string ghUser =2;
+  repeated ghList list =3;
 }

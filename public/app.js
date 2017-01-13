@@ -43,7 +43,7 @@ angular.module('app', [
   $scope.total = 0;
 
   $scope.submit = function() {
-    $http.put('/api/list?token=' + $rootScope.token + '&gh-username=' + $scope.ghUsername)
+    $http.put('/api/list', {token:$rootScope.token, ghUser:$scope.ghUsername})
     .then(function(resp) {
       for (i=0; i < resp.data.length; i++) {
         $scope.total += resp.data[i].stargazers_count;

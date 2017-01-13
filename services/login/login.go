@@ -16,5 +16,7 @@ func (m *AuthServices) Login(c context.Context, s *user.User) (*user.User, error
     tokEnc := base64.StdEncoding.EncodeToString(tokStr)
     s.Token=tokEnc;
   }
+
+//TODO: Add error handling
 	return s, nil
 }

@@ -13,8 +13,6 @@ import (
 	"stars-app/services"
 )
 
-const GITHUB_API_KEY = ""
-const GITHUB_USERNAME = ""
 
 func grpcHandlerFunc(grpcServer *grpc.Server, otherHandler http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
