@@ -39,4 +39,12 @@ body div.item {
     padding: 10px;
 }
 
-body div.totals {background-color: aliceblue;}
+/*body div.totals {background-color: aliceblue;}*/
+
+body{
+	background-color: #444;
+  }
+
+.vertical-offset-100{
+    padding-top:100px;
+}
