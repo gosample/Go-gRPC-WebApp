@@ -26,8 +26,6 @@ type Item struct {
    if s.Token == "" {
      return nil, errors.New("Token error")
    }
-   fmt.Printf("got token: %s", s.Token)
-   fmt.Printf("got ghUsername: %s", s.GhUser)
 
    tokStr, err := base64.StdEncoding.DecodeString(s.Token)
    if err != nil {

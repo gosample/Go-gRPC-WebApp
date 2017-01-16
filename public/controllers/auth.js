@@ -1,5 +1,5 @@
-angular.module('app.auth',[])
-.controller('LoginPageCtrl', function($state,$scope, $http, $location, $rootScope) {
+angular.module('app.auth',['angularModalService'])
+.controller('LoginPageCtrl', function($state,$scope, $http, $location, $rootScope,ModalService) {
   $('body').css('background-image','url(../images/login.jpg)');
   $scope.user = {
     username: '',
@@ -11,7 +11,6 @@ angular.module('app.auth',[])
   if(typeof data === 'string'){
     $scope.loginForm=false;
     $('listlink').css('visibility', 'visible');
-    console.log($('listlink'));
   }
   else{
     $scope.loginForm=true;
@@ -26,7 +25,12 @@ angular.module('app.auth',[])
       localStorage.setItem('data',$rootScope.token);
       $location.path('/list');
     }, function(e) {
-      alert ('error ', e);
+      $scope.error="Wrong Username / Password. Please retry."
     });
   };
+})
+.controller('LogoutCtrl', function($state,$scope, $http, $location, $rootScope,ModalService) {
+  $('body').css('background-image','url(../images/login.jpg)');
+  localStorage.removeItem('data');
+  $location.path('/');
 })

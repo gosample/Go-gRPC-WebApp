@@ -4,6 +4,7 @@ package services
    "fmt"
    "golang.org/x/net/context"
    "encoding/base64"
+   "errors"
    user "stars-app/messages/user"
  )
 
@@ -15,8 +16,9 @@ func (m *AuthServices) Login(c context.Context, s *user.User) (*user.User, error
     tokStr := []byte(s.Username + ":" + s.Password)
     tokEnc := base64.StdEncoding.EncodeToString(tokStr)
     s.Token=tokEnc;
+    return s, nil
+  } else{
+    return nil, errors.New("User Not Found");
   }
 
-//TODO: Add error handling
-	return s, nil
 }

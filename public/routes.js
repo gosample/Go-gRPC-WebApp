@@ -17,6 +17,12 @@ angular.module('app.routes', [
       templateUrl: '/views/list.html',
       params: {requireLogin: true}
     })
+    .state('logout', {
+      url:'/logout',
+      controller: 'LogoutCtrl',
+      templateUrl: '/views/login.html',
+      params: {requireLogin: true}
+    })
 
     $urlRouterProvider.otherwise('/');
 })
