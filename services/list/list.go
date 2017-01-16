@@ -63,14 +63,18 @@ type Item struct {
      return nil, err
    }
    var items []Item
+
    err = json.Unmarshal(respBody, &items)
    if err != nil {
      return nil, err
    }
+    var tempList []*ghResponse.ListGhList;
+    err = json.Unmarshal(respBody, &tempList)
+    if err != nil {
+      return nil, err
+    }
 
-   fmt.Printf("%s",items[0].Repo)
-
-
+    s.List=tempList;
 
 //TODO: Error handling
  	return s, nil
