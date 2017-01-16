@@ -3,14 +3,23 @@ angular.module('app', [
 ])
 
 
-.run(['$rootScope','$location','$state',function ($rootScope,$location,$stateProvider) {
+.run(['$rootScope','$location','$state',function ($rootScope,$location,$state,$stateProvider) {
 
   $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
-    var requireLogin = $stateProvider.requireLogin;
 
-    if (requireLogin && typeof $rootScope.currentUser === 'undefined') {
+     data=localStorage.getItem('data');
+
+     if(typeof data === 'string'){
+       $rootScope.loginForm=false;
+     }
+     else{
+       $rootScope.loginForm=true;
+     }
+
+    var requireLogin = toState.params.requireLogin;
+    if (requireLogin && typeof data != 'string') {
       event.preventDefault();
-      $location.path('/');
+      $state.go("login");
     }
   });
 

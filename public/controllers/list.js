@@ -1,16 +1,15 @@
 angular.module('app.list',[])
 
 .controller('ListPageCtrl', function($state,$scope, $http, $rootScope, $location) {
-  if (!$rootScope.token) {
-    $location.path('/');
-    return;
-  }
 
   $scope.ghUsername = '';
   $scope.items = [];
   $scope.total = 0;
 
+  $('body').css('background-image','');
+
   $scope.submit = function() {
+    console.log("in in");
     $http.put('/api/list', {token:$rootScope.token, ghUser:$scope.ghUsername})
     .then(function(resp) {
       for (i=0; i < resp.data.length; i++) {
