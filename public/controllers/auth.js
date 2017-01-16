@@ -29,8 +29,9 @@ angular.module('app.auth',['angularModalService'])
     });
   };
 })
-.controller('LogoutCtrl', function($state,$scope, $http, $location, $rootScope,ModalService) {
+.controller('LogoutCtrl', function($state,$scope, $http, $location, $rootScope,$window) {
   $('body').css('background-image','url(../images/login.jpg)');
   localStorage.removeItem('data');
   $location.path('/');
+  $window.location.reload();
 })

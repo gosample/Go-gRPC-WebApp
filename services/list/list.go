@@ -74,6 +74,5 @@ type Item struct {
 
     s.List=tempList;
 
-//TODO: Error handling
  	return s, nil
  }
