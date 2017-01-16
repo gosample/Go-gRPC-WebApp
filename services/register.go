@@ -41,7 +41,7 @@ func Init(){
   variables.Mux.Handle("/api/", gwmux)
   variables.Mux.Handle("/public/", http.StripPrefix("/public/", http.FileServer(http.Dir("./public"))))
 	variables.Mux.Handle("/views/", http.StripPrefix("/views/", http.FileServer(http.Dir("./public/views"))))
-	svariables.Mux.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("./public/static/css"))))
+	variables.Mux.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("./public/static/css"))))
 	variables.Mux.Handle("/js/", http.StripPrefix("/js/", http.FileServer(http.Dir("./public/static/js"))))
 	variables.Mux.Handle("/images/", http.StripPrefix("/images/", http.FileServer(http.Dir("./public/static/images"))))
   variables.Mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
