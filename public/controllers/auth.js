@@ -10,11 +10,9 @@ angular.module('app.auth',[])
 
   if(typeof data === 'string'){
     $scope.loginForm=false;
-    $('listlink').css('visibility', 'visible');
   }
   else{
     $scope.loginForm=true;
-    $('logoutlink').css('visibility', 'visible');
   }
 
 
@@ -22,10 +20,14 @@ angular.module('app.auth',[])
     $http.post('/api/login', $scope.user)
     .then(function(resp) {
       $rootScope.token = resp.data.token;
-      localStorage.setItem('data',$rootScope.token);
-      $location.path('/list');
+      if(typeof $rootScope.token === 'undefined'){
+          $scope.error="Wrong Username / Password. Please retry."
+      }else{
+          localStorage.setItem('data',$rootScope.token);
+          $location.path('/list');
+      }
     }, function(e) {
-      $scope.error="Wrong Username / Password. Please retry."
+      $scope.error="Server Error! Please try again later."
     });
   };
 })
