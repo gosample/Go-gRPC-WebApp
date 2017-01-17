@@ -1,5 +1,5 @@
-angular.module('app.auth',['angularModalService'])
-.controller('LoginPageCtrl', function($state,$scope, $http, $location, $rootScope,ModalService) {
+angular.module('app.auth',[])
+.controller('LoginPageCtrl', function($state,$scope, $http, $location, $rootScope) {
   $('body').css('background-image','url(../images/login.jpg)');
   $scope.user = {
     username: '',

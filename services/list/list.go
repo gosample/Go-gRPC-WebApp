@@ -24,12 +24,12 @@ type Item struct {
 
 
    if s.Token == "" {
-     return nil, errors.New("Token error")
+     return nil, errors.New("Please sign in")
    }
 
    tokStr, err := base64.StdEncoding.DecodeString(s.Token)
    if err != nil {
-     panic(err)
+     return nil, errors.New("Gotcha!")
    }
    tokParts := strings.Split(string(tokStr), ":")
    usernameMatch := ""
@@ -53,23 +53,18 @@ type Item struct {
    req.SetBasicAuth(utils.GITHUB_USERNAME, utils.GITHUB_API_KEY)
    resp, err := http.DefaultClient.Do(req)
    if err != nil {
-     return nil, err
+     return nil, errors.New("Server Error!")
    }
 
    respBody, err := ioutil.ReadAll(resp.Body)
    if err != nil {
-     return nil, err
+     return nil, errors.New("Server Error!")
    }
-   var items []Item
 
-   err = json.Unmarshal(respBody, &items)
-   if err != nil {
-     return nil, err
-   }
     var tempList []*ghResponse.ListGhList;
     err = json.Unmarshal(respBody, &tempList)
     if err != nil {
-      return nil, err
+      //Just letting it go, error will be caught at the front end
     }
 
     s.List=tempList;
