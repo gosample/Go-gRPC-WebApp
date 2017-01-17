@@ -1,7 +1,7 @@
 package services
 
  import (
-   "log"
+   "github.com/golang/glog"
    "errors"
    "stars-app/variables"
    "golang.org/x/net/context"
@@ -17,7 +17,7 @@ func (m *AuthServices) Login(c context.Context, s *user.User) (*user.User, error
 
   session, err := mgo.Dial(variables.MongoAddr)
   if err != nil {
-    log.Error("Mongo Connection Failed.");
+    glog.Error("Mongo Connection Failed.");
     return nil, errors.New("Server Error");
   }
   defer session.Close()
@@ -53,7 +53,7 @@ func (m *AuthServices) CreateUser(c context.Context, s *user.User) (*user.User, 
 
   session, err := mgo.Dial(variables.MongoAddr)
   if err != nil {
-    log.Error("Mongo Connection Failed.");
+    glog.Error("Mongo Connection Failed.");
     return nil, errors.New("Server Error");
   }
   defer session.Close()
@@ -71,7 +71,7 @@ func (m *AuthServices) CreateUser(c context.Context, s *user.User) (*user.User, 
     err = conn.Insert(s);
     if err!=nil {
       //Error while inserting value
-      log.Error("Mongo Connection Failed.");
+      glog.Error("Mongo Connection Failed.");
       s.Token="";
       return s, nil;
     }
