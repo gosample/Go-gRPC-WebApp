@@ -9,8 +9,14 @@ angular.module('app', [
 
      data= Cookies.get('data');
 
+     console.log(toState);
+
      if(typeof data === 'string'){
-       $rootScope.loginForm=false;
+        if(toState.url === '/newuser'){
+          event.preventDefault();
+          $state.go("login");
+        }
+        $rootScope.loginForm=false;
      }
      else{
        $rootScope.loginForm=true;
