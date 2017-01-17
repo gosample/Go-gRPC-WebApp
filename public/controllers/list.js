@@ -13,12 +13,16 @@ angular.module('app.list',[])
     $scope.total=0;
     $scope.listError="";
 
-    data = localStorage.getItem('data');
+    data = Cookies.get('data');
     if( typeof data != 'string' ){
       $location.path('/');
     } else{
-      $http.put('/api/list', {token:localStorage.getItem('data'), ghUser:$scope.ghUsername})
+      $http.put('/api/list', {token:data, ghUser:$scope.ghUsername})
       .then(function(resp) {
+        if(resp.data.token == "")
+        {
+          $location.path('/');
+        }
         if(typeof resp.data.list === 'undefined'){
           $scope.listError="Github user not found! :("
         }

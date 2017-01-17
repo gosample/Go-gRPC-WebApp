@@ -2,13 +2,15 @@ package services
 
  import (
    "fmt"
+   "stars-app/variables"
+   "stars-app/messages/user"
+   "gopkg.in/mgo.v2"
+   "gopkg.in/mgo.v2/bson"
    "golang.org/x/net/context"
-   "encoding/base64"
    "net/http"
    "errors"
    "io/ioutil"
    "stars-app/utils"
-   "strings"
    "encoding/json"
    ghResponse "stars-app/messages/ghResponse"
  )
@@ -24,30 +26,28 @@ type Item struct {
 
 
    if s.Token == "" {
-     return nil, errors.New("Please sign in")
+     //Token not found!
+     s.Token="";
+     return s, nil
    }
 
-   tokStr, err := base64.StdEncoding.DecodeString(s.Token)
+
+   session, err := mgo.Dial(variables.MongoAddr)
    if err != nil {
-     return nil, errors.New("Gotcha!")
+      return nil, errors.New("Server Error!");
    }
-   tokParts := strings.Split(string(tokStr), ":")
-   usernameMatch := ""
-   passwdMatch := ""
+   defer session.Close()
 
-     if tokParts[0] == "admin" {
-       usernameMatch = "admin"
-     }
-     if tokParts[1] == "password" {
-       passwdMatch = "password"
-     }
+   conn := session.DB("mongo").C("users")
+   var us user.User;
+   err = conn.Find(bson.M{"token":s.Token}).One(&us)
+   if err != nil {
+     //Token not found!
+        s.Token="";
+        return s, nil
+   }
 
-   if usernameMatch == "" {
-     return nil, errors.New("User Not Found")
-   }
-   if passwdMatch == "" {
-     return nil, errors.New("Password Not Found")
-   }
+
 
    req, _ := http.NewRequest("GET", fmt.Sprintf("https://api.github.com/users/%s/repos", s.GhUser), nil)
    req.SetBasicAuth(utils.GITHUB_USERNAME, utils.GITHUB_API_KEY)
@@ -64,7 +64,8 @@ type Item struct {
     var tempList []*ghResponse.ListGhList;
     err = json.Unmarshal(respBody, &tempList)
     if err != nil {
-      //Just letting it go, error will be caught at the front end
+      //GH User not found!
+      return s, nil
     }
 
     s.List=tempList;

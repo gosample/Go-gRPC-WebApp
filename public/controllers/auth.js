@@ -6,7 +6,7 @@ angular.module('app.auth',[])
     password: '',
   };
 
-  data=localStorage.getItem('data');
+  data= Cookies.get('data');
 
   if(typeof data === 'string'){
     $scope.loginForm=false;
@@ -23,7 +23,7 @@ angular.module('app.auth',[])
       if(typeof $rootScope.token === 'undefined'){
           $scope.error="Wrong Username / Password. Please retry."
       }else{
-          localStorage.setItem('data',$rootScope.token);
+          Cookies.set('data',$rootScope.token);
           $location.path('/list');
       }
     }, function(e) {
@@ -33,7 +33,7 @@ angular.module('app.auth',[])
 })
 .controller('LogoutCtrl', function($state,$scope, $http, $location, $rootScope,$window) {
   $('body').css('background-image','url(../images/login.jpg)');
-  localStorage.removeItem('data');
+  Cookies.remove('data');
   $location.path('/');
   $window.location.reload();
 })

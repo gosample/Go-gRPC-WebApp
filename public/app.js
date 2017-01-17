@@ -7,7 +7,7 @@ angular.module('app', [
 
   $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
 
-     data=localStorage.getItem('data');
+     data= Cookies.get('data');
 
      if(typeof data === 'string'){
        $rootScope.loginForm=false;
