@@ -9,7 +9,7 @@
     region: us-west-2
   tasks:
     - name: Launch Instance
-      ec2: 
+      ec2:
          key_name: "{{ keypair }}"
          group: default
          instance_type: "{{ instance_type }}"
