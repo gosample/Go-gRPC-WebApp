@@ -6,6 +6,6 @@ RUN go get -u github.com/golang/protobuf/protoc-gen-go
 RUN go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway
 RUN go get gopkg.in/mgo.v2
 
-COPY ../ /go/src/stars-app
+COPY . /go/src/stars-app
 
 EXPOSE 8587
