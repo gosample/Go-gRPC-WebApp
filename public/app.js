@@ -9,8 +9,6 @@ angular.module('app', [
 
      data= Cookies.get('data');
 
-     console.log(toState);
-
      if(typeof data === 'string'){
         if(toState.url === '/newuser'){
           event.preventDefault();
