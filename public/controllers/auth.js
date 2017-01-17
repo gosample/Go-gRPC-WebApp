@@ -52,7 +52,7 @@ angular.module('app.auth',[])
     .then(function(resp) {
       $rootScope.token = resp.data.token;
       if(typeof $rootScope.token === 'undefined'){
-          $scope.nuerror="User already exists. "
+          $scope.nuerror="User already exists."
       }else{
           Cookies.set('data',$rootScope.token);
           $location.path('/list');
