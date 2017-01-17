@@ -16,4 +16,5 @@ var (
   StarsAppCertPool *x509.CertPool
   Creds credentials.TransportCredentials
   Addr string = "localhost:8587"
+  MongoAddr string ="mongodb://tjs:password@ds039684.mlab.com:39684/mongo"
 )

@@ -1,6 +1,7 @@
 package services
 
  import (
+   "stars-app/variables"
    "golang.org/x/net/context"
    "encoding/base64"
    "gopkg.in/mgo.v2"
@@ -12,7 +13,7 @@ type AuthServices struct{}
 
 func (m *AuthServices) Login(c context.Context, s *user.User) (*user.User, error) {
 
-  session, err := mgo.Dial("mongodb://tjs:password@ds039684.mlab.com:39684/mongo")
+  session, err := mgo.Dial(variables.MongoAddr)
         if err != nil {
                 panic(err)
         }
