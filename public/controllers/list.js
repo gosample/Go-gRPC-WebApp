@@ -5,6 +5,7 @@ angular.module('app.list',[])
   $scope.ghUsername = '';
   $scope.items = [];
   $scope.total = 0;
+  $scope.githubUser="";
 
   $('body').css('background-image','');
 
@@ -12,6 +13,7 @@ angular.module('app.list',[])
     $scope.items =[];
     $scope.total=0;
     $scope.listError="";
+    $scope.githubUser=$scope.ghUsername;
 
     data = Cookies.get('data');
     if( typeof data != 'string' ){
