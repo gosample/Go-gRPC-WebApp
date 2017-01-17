@@ -1,0 +1,35 @@
+---
+- name: Create a sandbox instance
+  hosts: localhost
+  gather_facts: False
+  vars:
+    keypair: id_rsa
+    instance_type: t2.micro
+    image: ami-5ab5063a
+    region: us-west-2
+  tasks:
+    - name: Launch Instance
+      ec2: 
+         key_name: "{{ keypair }}"
+         group: default
+         instance_type: "{{ instance_type }}"
+         image: "{{ image }}"
+         wait: true
+         region: "{{ region }}"
+         aws_access_key: AKIAJTC2OXJXHQJEMG7A
+         aws_secret_key: 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
+      register: ec2
+
+    - name: Wait for port 22
+      wait_for:
+        state: started
+        host: "{{ ec2.instances[0].public_ip }}"
+        port: 22
+        delay: 10
+      when: ec2|changed
+
+    - name: Print all ec2 variables
+      debug: var=ec2.instances[0].public_ip
+
+    - name: Copy files
+      shell: scp -r -q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null /home/tjs/go/src/stars-app/* core@{{ ec2.instances[0].public_ip }}:/home/core/
