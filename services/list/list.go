@@ -1,7 +1,7 @@
 package services
 
  import (
-   "fmt"
+   "log"
    "stars-app/variables"
    "stars-app/messages/user"
    "gopkg.in/mgo.v2"
@@ -34,7 +34,8 @@ type Item struct {
 
    session, err := mgo.Dial(variables.MongoAddr)
    if err != nil {
-      return nil, errors.New("Server Error!");
+     log.Error("Mongo Connection Failed.");
+     return nil, errors.New("Server Error!");
    }
    defer session.Close()
 
@@ -53,11 +54,13 @@ type Item struct {
    req.SetBasicAuth(utils.GITHUB_USERNAME, utils.GITHUB_API_KEY)
    resp, err := http.DefaultClient.Do(req)
    if err != nil {
+     log.Error("GitHub Connection Error.");
      return nil, errors.New("Server Error!")
    }
 
    respBody, err := ioutil.ReadAll(resp.Body)
    if err != nil {
+     log.Error("GitHub Response Error.");
      return nil, errors.New("Server Error!")
    }
 
