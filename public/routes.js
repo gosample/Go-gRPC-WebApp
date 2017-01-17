@@ -5,6 +5,12 @@ angular.module('app.routes', [
   'use strict';
   $locationProvider.html5Mode(true);
   $stateProvider
+    .state('newuser',{
+      url:'/newuser',
+      controller: 'CreateUserCtrl',
+      templateUrl: '/views/newuser.html',
+      params: {requireLogin:false}
+    })
     .state('login', {
       url:'/',
       controller: 'LoginPageCtrl',

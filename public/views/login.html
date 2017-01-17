@@ -18,6 +18,8 @@
 <hgroup>
   <h1>Stars App</h1>
   <h5>This app lists all the stars for any Github user</h5>
+  <br><br><br>
+  <h3 ng-show="loginForm">Login</h3>
 </hgroup>
 
 
@@ -30,8 +32,9 @@
     <input type="password" ng-model="user.password"><span class="highlight"></span><span class="bar"></span>
     <label>Password</label>
   </div>
+
   <button type="button" class="button buttonBlue" ng-click="login()">Sign In
     <div class="ripples buttonRipples"><span class="ripplesCircle"></span></div>
   </button>
-  {{error}}
+  {{error}} New user? Click <a href="/newuser">here</a>
 </form>

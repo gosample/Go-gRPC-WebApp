@@ -12,4 +12,10 @@ service LoginService {
       body: "*"
     };
   }
+  rpc CreateUser(user.User) returns (user.User) {
+    option (google.api.http) = {
+      post: "/api/createuser"
+      body: "*"
+    };
+  }
 }
