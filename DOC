@@ -1,3 +1,24 @@
-Doc:
+Author: Thejass Krishnan
 
-- Use compile.sh for compiling the protobuf files.
+Documentation
+-------------
+Use scripts/compile.sh for compiling the protobuf files.
+
+Create EC2 instance and copy the files from local machine to ec2 host with CoreOS (Needs AWS access key and secret key & my SSH key!)
+sudo ansible-playbook scripts/playbook.yaml
+
+Log in to the EC2 instance
+ssh core@<EC2-IP>
+
+Run the following commands in the current directory
+docker build -r stars-app .
+docker run -p 443:8587 -it stars-app
+
+Keys Removed:
+scripts/playbook.yaml
+	-aws_access_key
+	-aws_secret_key
+
+utils/gh.go
+	-GITHUB_API_KEY
+	-GITHUB_USERNAME
