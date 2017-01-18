@@ -18,4 +18,10 @@ service LoginService {
       body: "*"
     };
   }
+  rpc Logout(user.User) returns (user.User) {
+    option (google.api.http) = {
+      post: "/api/logout"
+      body: "*"
+    };
+  }
 }

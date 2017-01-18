@@ -21,9 +21,11 @@ angular.module('app.list',[])
     } else{
       $http.put('/api/list', {token:data, ghUser:$scope.ghUsername})
       .then(function(resp) {
-        if(resp.data.token == "")
+
+        if(resp.data.token === "" || typeof resp.data.token === 'undefined')
         {
-          $location.path('/');
+          Cookies.remove('data');
+          $state.go('login');
         }
         if(typeof resp.data.list === 'undefined'){
           $scope.listError="Github user not found! :("

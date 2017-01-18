@@ -32,12 +32,21 @@ angular.module('app.auth',[])
   };
 })
 
+
 .controller('LogoutCtrl', function($state,$scope, $http, $location, $rootScope,$window) {
   $('body').css('background-image','url(../images/login.jpg)');
   Cookies.remove('data');
+
+  $http.post('/api/logout', {token:$rootScope.token})
+  .then(function(resp) {
+  }, function(e) {
+    $scope.error="Server Error! Please try again later."
+  });
+
   $location.path('/');
-  $window.location.reload();
+  //$window.location.reload();
 })
+
 
 .controller('CreateUserCtrl', function($state,$scope, $http, $location, $rootScope,$window) {
   $('body').css('background-image','url(../images/login.jpg)');

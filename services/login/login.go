@@ -84,3 +84,38 @@ func (m *AuthServices) CreateUser(c context.Context, s *user.User) (*user.User, 
     return s, nil;
   }
 }
+
+
+func (m *AuthServices) Logout(c context.Context, s *user.User) (*user.User, error) {
+
+  session, err := mgo.Dial(variables.MongoAddr)
+  if err != nil {
+    glog.Error("Mongo Connection Failed.");
+    return nil, errors.New("Server Error");
+  }
+  defer session.Close()
+
+  conn := session.DB("mongo").C("users")
+  err = conn.Find(bson.M{"token": s.Token}).One(&s)
+  if err != nil {
+    //Token not found
+    s.Username="";
+    s.Password="";
+    s.Token="";
+    return s, nil;
+  }
+
+  s.Token="";
+
+  err = conn.Update(bson.M{"username":s.Username},bson.M{ "$set": s})
+  if err != nil {
+    //User not found while updating the token
+    s.Username="";
+    s.Password="";
+    s.Token="";
+    return s, nil;
+  }
+  s.Password="";
+  return s, nil
+
+}
