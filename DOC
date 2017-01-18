@@ -4,7 +4,7 @@ Documentation
 -------------
 Use scripts/compile.sh for compiling the protobuf files.
 
-Create EC2 instance and copy the files from local machine to ec2 host with CoreOS (Needs AWS access key and secret key & my SSH key!)
+Create EC2 instance and copy the files from local machine to ec2 host with CoreOS (Needs AWS access key, secret key & SSH key!)
 sudo ansible-playbook scripts/playbook.yaml
 
 Log in to the EC2 instance

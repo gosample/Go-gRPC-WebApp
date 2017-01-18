@@ -9,3 +9,5 @@ RUN go get gopkg.in/mgo.v2
 COPY . /go/src/stars-app
 
 EXPOSE 8587
+
+WORKDIR /go/src/stars-app
