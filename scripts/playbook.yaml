@@ -32,7 +32,7 @@
       debug: var=ec2.instances[0].public_ip
 
     - name: Copy files
-      shell: scp -r -q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null /home/tjs/go/src/stars-app core@{{ ec2.instances[0].public_ip }}:/home/core/
+      shell: scp -r -q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ../../stars-app core@{{ ec2.instances[0].public_ip }}:/home/core/
 
     - name: add host to inventory
       add_host: name={{ ec2.instances[0].public_ip }} groups=newinstances

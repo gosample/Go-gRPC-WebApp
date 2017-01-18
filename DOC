@@ -2,19 +2,20 @@ Author: Thejass Krishnan
 
 Documentation
 -------------
-Use scripts/compile.sh for compiling the protobuf files.
 
-Create EC2 instance and copy the files from local machine to ec2 host with CoreOS (Needs AWS access key, secret key & SSH key!)
-sudo ansible-playbook scripts/playbook.yaml
+Deploying the source code:
 
-Log in to the EC2 instance
-ssh core@<EC2-IP>
+	Use scripts/compile.sh for compiling the protobuf files.
 
-Run the following commands in the current directory
-docker build -r stars-app .
-docker run -p 443:8587 -it stars-app
+	Create EC2 instance (CoreOS) and copy the files from local machine (Needs AWS access key, secret key & SSH key!) using this playbook. Your working directory should be stars-app/scripts/ while executing:
+
+				sudo ansible-playbook playbook.yaml
+
+	The deployment is completely automated with Ansible 2.0. Pls make sure your SSH key is configured and your AWS IAM user uses the same SSH key. You will have to specify your SSH key in the ansible playbook.
+
 
 Keys Removed:
+-------------
 scripts/playbook.yaml
 	-aws_access_key
 	-aws_secret_key
