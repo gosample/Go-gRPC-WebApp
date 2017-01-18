@@ -3,6 +3,14 @@ Author: Thejass Krishnan
 Documentation
 -------------
 
+Completed Tasks:
+- Rewrote the backend using gRPC and gRPC-gateway plugin
+- Enabled TLS using self signed certificate
+- Automated protobuf compilation
+- Modified the UI using Bootstrap JS and Material Design
+- Deployed on golang Docker container running on EC2 CoreOS instance 
+- Automated the entire deployment process using Ansible
+
 Deploying the source code:
 
 	Use scripts/compile.sh for compiling the protobuf files.
@@ -12,7 +20,6 @@ Deploying the source code:
 				sudo ansible-playbook playbook.yaml
 
 	The deployment is completely automated with Ansible 2.0. Pls make sure your SSH key is configured and your AWS IAM user uses the same SSH key. You will have to specify your SSH key in the ansible playbook.
-
 
 Keys Removed:
 -------------

@@ -16,8 +16,8 @@
          image: "{{ image }}"
          wait: true
          region: "{{ region }}"
-         aws_access_key: AKIAJTC2OXJXHQJEMG7A
-         aws_secret_key: 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
+         aws_access_key: 
+         aws_secret_key: 
       register: ec2
 
     - name: Wait for port 22
