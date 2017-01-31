@@ -13,13 +13,13 @@ Completed Tasks:
 
 Deploying the source code:
 
-	Use scripts/compile.sh for compiling the protobuf files.
+Use scripts/compile.sh for compiling the protobuf files.
 
-	Create EC2 instance (CoreOS) and copy the files from local machine (Needs AWS access key, secret key & SSH key!) using this playbook. Your working directory should be stars-app/scripts/ while executing:
+Create EC2 instance (CoreOS) and copy the files from local machine (Needs AWS access key, secret key & SSH key!) using this playbook. Your working directory should be stars-app/scripts/ while executing:
 
 				sudo ansible-playbook playbook.yaml
 
-	The deployment is completely automated with Ansible 2.0. Pls make sure your SSH key is configured and your AWS IAM user uses the same SSH key. You will have to specify your SSH key in the ansible playbook.
+The deployment is completely automated with Ansible 2.0. Pls make sure your SSH key is configured and your AWS IAM user uses the same SSH key. You will have to specify your SSH key in the ansible playbook.
 
 Keys Removed:
 -------------
